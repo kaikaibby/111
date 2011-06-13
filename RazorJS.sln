@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorJS.WebExample", "RazorJS.WebExample\RazorJS.Web.csproj", "{B6B1B78A-7123-44B4-9352-8967AB9CABA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorJS.Core", "RazorJS.Core\RazorJS.Core.csproj", "{9F7E79E4-6E66-4B5D-B2FF-FE600FB2F0D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FE0E5ABD-0896-482B-B708-A8B27C718EC9}"
+	ProjectSection(SolutionItems) = preProject
+		RazorJS.vsmdi = RazorJS.vsmdi
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = RazorJS.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B6B1B78A-7123-44B4-9352-8967AB9CABA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6B1B78A-7123-44B4-9352-8967AB9CABA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6B1B78A-7123-44B4-9352-8967AB9CABA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6B1B78A-7123-44B4-9352-8967AB9CABA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F7E79E4-6E66-4B5D-B2FF-FE600FB2F0D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F7E79E4-6E66-4B5D-B2FF-FE600FB2F0D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F7E79E4-6E66-4B5D-B2FF-FE600FB2F0D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F7E79E4-6E66-4B5D-B2FF-FE600FB2F0D7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
