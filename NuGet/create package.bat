@@ -1,0 +1,1 @@
+nuget pack files/RazorJS.nuspec
