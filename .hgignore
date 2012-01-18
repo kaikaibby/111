@@ -1,0 +1,12 @@
+syntax: glob
+RazorJS.Core/bin/
+RazorJS.Core/obj/
+RazorJS.WebExample/bin/
+RazorJS.WebExample/obj/
+_ReSharper.RazorJS/
+RazorJS.5.1.ReSharper.user
+RazorJS.6.0.ReSharper.user
+RazorJS.sln.docstates
+RazorJS.sln.docstates.suo
+RazorJS.suo
+RazorJS.vsmdi
