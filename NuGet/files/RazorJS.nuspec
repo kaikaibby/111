@@ -1,18 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-  <metadata schemaVersion="2">
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
     <id>RazorJS</id>
-    <version>0.5</version>
-    <title>RazorJS</title>
+    <version>0.6</version>
     <authors>John Katsiotis</authors>
     <owners />
     <projectUrl>http://john.katsiotis.com/blog/razorjs---write-razor-inside-your-javascript-files</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Write Razor-Style C# or VB.NET insde your Javascript Files. Also contains an http handler for serving, when needed, those files.</description>
-    <summary>Write Razor-Style C# or VB.NET insde your Javascript Files.</summary>
+    <description>Write Razor-Style C# or VB.NET inside your JavaScript Files. Also contains an http handler for serving, when needed, those files.</description>
+    <releaseNotes>Write Razor-Style C# or VB.NET insde your Javascript Files.</releaseNotes>
     <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.Web.Mvc" targetFramework=".NETFramework4.0" />
-      <frameworkAssembly assemblyName="System.Web.WebPages" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly  assemblyName="System.Web.Mvc" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly  assemblyName="System.Web.WebPages" targetFramework=".NETFramework4.0" />
     </frameworkAssemblies>
   </metadata>
 </package>

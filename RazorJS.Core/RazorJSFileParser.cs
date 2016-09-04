@@ -16,11 +16,18 @@ namespace RazorJS
 {
     public class RazorJSFileParser
     {
-        private readonly string _filename;
+        private object lockerObject = new object();
+        private readonly string _filename, _fullUrl;
 
         public RazorJSFileParser(string filename)
         {
             _filename = filename;
+        }
+
+        public RazorJSFileParser(string filename, string fullUrl) : this(filename)
+            //works for script with a query string
+        {
+            _fullUrl = fullUrl;
         }
 
         #region [ Public Methods ]
@@ -28,7 +35,8 @@ namespace RazorJS
 
         public string ScriptInclude(bool useTags = true)
         {
-            TagBuilder builder = BuildScriptTag(string.Format("{0}?fn={1}", Extensions.ResolveUrl(RazorJSSettings.Settings.HandlerPath), Extensions.ResolveUrl(_filename)));
+            TagBuilder builder = BuildScriptTag(string.Format("{0}?fn={1}", 
+                Extensions.ResolveUrl(RazorJSSettings.Settings.HandlerPath), Extensions.ResolveUrl(_filename)));
             return builder.ToString();
         }
 
@@ -49,7 +57,7 @@ namespace RazorJS
             TagBuilder builder = BuildScriptTag();
             string filePath = GetFilePath(_filename);
             string template = GetJs(filePath);
-            string result = ParseTemplate(template, filePath);
+            string result = ParseTemplate(template, _fullUrl ?? filePath);
             if (!addScriptTags)
                 return result;
             builder.InnerHtml = result;
@@ -85,14 +93,18 @@ namespace RazorJS
                 {
                     if (!CachedFileAccess.IsCompiled(name))
                     {
-                        service.Compile(template, name);
-                        CachedFileAccess.SetCompiled(name);
+                        //protect from random crashes of the RazonEngine service compiler
+                        lock (lockerObject)
+                        {
+                            service.Compile(template, name);
+                            CachedFileAccess.SetCompiled(name);
+                        }
                     }
 
                     return service.Run(name);
                 }
             }
-            catch (RazorEngine.Templating.TemplateCompilationException ex)
+            catch (TemplateCompilationException ex)
             {
                 StringBuilder sb = new StringBuilder();
                 foreach (var e in ex.CompilerErrors)
