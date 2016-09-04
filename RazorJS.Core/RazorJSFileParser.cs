@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RazorEngine.Configuration;
+using RazorEngine.Templating;
 using RazorJS.Configuration;
 using System.Configuration;
 using System.Web;
@@ -57,7 +59,7 @@ namespace RazorJS
         #endregion
 
         #region [ Private Methods ]
-        
+
         private static TagBuilder BuildScriptTag(string src = "")
         {
             TagBuilder builder = new TagBuilder("script");
@@ -66,7 +68,7 @@ namespace RazorJS
                 builder.Attributes["src"] = src;
             return builder;
         }
-        
+
         private string ParseTemplate(string template, string name)
         {
             try
@@ -74,18 +76,26 @@ namespace RazorJS
                 if (string.IsNullOrWhiteSpace(template))
                     return string.Empty;
 
-                if (!CachedFileAccess.IsCompiled(name))
+                var razorEngineconfig = new TemplateServiceConfiguration
                 {
-                    RazorEngine.Razor.SetTemplateBase(typeof(HtmlTemplateBase));
-                    RazorEngine.Razor.Compile(template, name);
-                    CachedFileAccess.SetCompiled(name);
+                    BaseTemplateType = typeof(HtmlTemplateBase)
+                };
+
+                using (var service = RazorEngineService.Create(razorEngineconfig))
+                {
+                    if (!CachedFileAccess.IsCompiled(name))
+                    {
+                        service.Compile(template, name);
+                        CachedFileAccess.SetCompiled(name);
+                    }
+
+                    return service.Run(name);
                 }
-                return RazorEngine.Razor.Run(name);
             }
             catch (RazorEngine.Templating.TemplateCompilationException ex)
             {
                 StringBuilder sb = new StringBuilder();
-                foreach (var e in ex.Errors)
+                foreach (var e in ex.CompilerErrors)
                     sb.AppendFormat("{0}\n", e.ToString().Replace(e.FileName, string.Empty));
                 throw new JSFileParserException(string.Format("Failure to parse template {0}. See Errors:\n{1}", _filename, sb.ToString()));
             }
@@ -97,19 +107,25 @@ namespace RazorJS
             {
                 if (string.IsNullOrWhiteSpace(template))
                     return string.Empty;
-
-                if (!CachedFileAccess.IsCompiled(name))
+                var razorEngineconfig = new TemplateServiceConfiguration
                 {
-                    RazorEngine.Razor.SetTemplateBase(typeof(HtmlTemplateBase<>));
-                    RazorEngine.Razor.Compile(template, typeof(T), name);
-                    CachedFileAccess.SetCompiled(name);
+                    BaseTemplateType = typeof(HtmlTemplateBase<>)
+                };
+
+                using (var service = RazorEngineService.Create(razorEngineconfig))
+                {
+                    if (!CachedFileAccess.IsCompiled(name))
+                    {
+                        service.Compile(template, name, typeof(T));
+                        CachedFileAccess.SetCompiled(name);
+                    }
+                    return service.Run(name, typeof(T));
                 }
-                return RazorEngine.Razor.Run(model, name);
             }
             catch (RazorEngine.Templating.TemplateCompilationException ex)
             {
                 StringBuilder sb = new StringBuilder();
-                foreach (var e in ex.Errors)
+                foreach (var e in ex.CompilerErrors)
                     sb.AppendFormat("{0}\n", e.ToString().Replace(e.FileName, string.Empty));
                 throw new JSFileParserException(string.Format("Failure to parse template {0}. See Errors:\n{1}", _filename, sb.ToString()));
             }
